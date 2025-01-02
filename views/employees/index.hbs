@@ -28,3 +28,23 @@ app.get('/customers/create', async(req,res)=>{
         'companies': companies
     })
 })
+
+//  5.3 Processing the Form to add a new Customer
+app.post('/customers/create', async(req,res)=>{
+    let {first_name, last_name, rating, company_id} = req.body;
+    let query = 'INSERT INTO Customers (first_name, last_name, rating, company_id) VALUES (?, ?, ?, ?)';
+    let bindings = [first_name, last_name, rating, company_id];
+    await connection.execute(query, bindings);
+    res.redirect('/customers');
+})
+
+//  5.4 Display a Form to Update a specific Customer
+app.get('/customers/:customer_id/edit', async (req, res) => {
+    let [customers] = await connection.execute('SELECT * from Customers WHERE customer_id = ?', [req.params.customer_id]);
+    let [companies] = await connection.execute('SELECT * from Companies');
+    let customer = customers[0];
+    res.render('customers/edit', {
+        'customer': customer,
+        'companies': companies
+    })
+})
