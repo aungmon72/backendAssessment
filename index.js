@@ -40,3 +40,4 @@ async function main() {
         console.log('Server is running')
     });
 }
+main();
