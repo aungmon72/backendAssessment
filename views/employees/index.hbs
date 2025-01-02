@@ -4,3 +4,31 @@ app.get('/customers', async (req, res) => {
         'customers': customers
     })
 })
+
+//  ************************
+//  Obtaining the Results with Nested Tables
+//  To be added
+//  ************************
+{
+     {{!-- const [customers] = await connection.execute({
+            'sql':`
+            SELECT * from Customers
+                JOIN Companies ON Customers.company_id = Companies.company_id;
+            `,
+            nestTables: true
+
+        }); --}}
+}
+{
+    {{!-- <td>{{Customers.first_name}}</td>
+<td>{{Customers.last_name}}</td>
+<td>{{Companies.name}}</td> --}}
+
+}
+// 5.2  Create a route to display a form to add new customer
+app.get('/customers/create', async(req,res)=>{
+    let [companies] = await connection.execute('SELECT * from Companies');
+    res.render('customers/add', {
+        'companies': companies
+    })
+})
