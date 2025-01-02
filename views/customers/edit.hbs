@@ -25,6 +25,21 @@
             {{/each}}
         </select>
     </div>
+
+    <!--# 7. Update a Many to Many Relationship
+    -->
+    <div class="mb-3">
+        <label>Employees</label>
+        <select name="employee_id" class="form-control" multiple>
+            {{#each employees}}
+            <option value="{{employee_id}}"
+            {{#inArray ../relatedEmployees employee_id }}selected{{/inArray}}>
+                {{first_name}} {{last_name}}
+            </option>
+            {{/each}}
+        </select>
+    </div>
+
     <button type="submit" class="btn btn-primary">Update Customer</button>
 </form>
 {{/block}}
