@@ -1,24 +1,20 @@
 app.get('/customers', async (req, res) => {
-    let [customers] = await connection.execute('SELECT * FROM Customers INNER JOIN Companies ON Customers.company_id = Companies.company_id');
-    res.render('customers/index', {
-        'customers': customers
-    })
-})
-
-//  ************************
-//  Obtaining the Results with Nested Tables
-//  To be added
-//  ************************
-{
-     {{!-- const [customers] = await connection.execute({
+    {{!-- let [customers] = await connection.execute(
+        'SELECT * FROM Customers INNER JOIN Companies 
+        ON Customers.company_id = Companies.company_id'); --}}
+    let [customers] = await connection.execute({
             'sql':`
             SELECT * from Customers
                 JOIN Companies ON Customers.company_id = Companies.company_id;
             `,
             nestTables: true
 
-        }); --}}
-}
+    });
+    res.render('customers/index', {
+        'customers': customers
+    })
+})
+
 {
     {{!-- <td>{{Customers.first_name}}</td>
 <td>{{Customers.last_name}}</td>
