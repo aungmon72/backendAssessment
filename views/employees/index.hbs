@@ -48,3 +48,12 @@ app.get('/customers/:customer_id/edit', async (req, res) => {
         'companies': companies
     })
 })
+
+//  5.5 Processing the Update
+app.post('/customers/:customer_id/edit', async (req, res) => {
+    let {first_name, last_name, rating, company_id} = req.body;
+    let query = 'UPDATE Customers SET first_name=?, last_name=?, rating=?, company_id=? WHERE customer_id=?';
+    let bindings = [first_name, last_name, rating, company_id, req.params.customer_id];
+    await connection.execute(query, bindings);
+    res.redirect('/customers');
+})
